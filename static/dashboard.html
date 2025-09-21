@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Консультант - Панель управления</title>
+    <link rel="stylesheet" href="/static/styles/main.css">
+    <link rel="stylesheet" href="/static/styles/dashboard.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Триггерная зона для сайдбара -->
+    <div class="sidebar-trigger" id="sidebarTrigger"></div>
+    
+    <!-- Индикатор sidebar -->
+    <div class="sidebar-indicator"></div>
+
+    <!-- Боковое меню -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-users"></i>
+                <span>HR Консультант</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div class="user-info">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="user-details">
+                <h3 id="userName">Имя пользователя</h3>
+                <p id="userRole">Роль</p>
+            </div>
+        </div>
+
+        <ul class="nav-menu" id="navMenu">
+            <!-- Для работника -->
+            <li class="nav-item" data-tab="profile">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-user"></i>
+                    <span>Профиль</span>
+                </a>
+            </li>
+            <li class="nav-item" data-tab="development">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Пути развития</span>
+                </a>
+            </li>
+            <li class="nav-item" data-tab="leaderboard">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-trophy"></i>
+                    <span>Таблица лидеров</span>
+                </a>
+            </li>
+
+            <!-- Для менеджера -->
+            <li class="nav-item" data-tab="employees">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    <span>Сотрудники</span>
+                </a>
+            </li>
+            <li class="nav-item" data-tab="assistant">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-robot"></i>
+                    <span>Ассистент</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="theme-toggle">
+                <label class="theme-switch">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="slider">
+                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon"></i>
+                    </span>
+                    <span class="theme-label">Темная тема</span>
+                </label>
+            </div>
+            <button class="logout-btn" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Выйти</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <main class="main-content">
+        <div class="content-header">
+            <h1 id="pageTitle">Добро пожаловать!</h1>
+            <div class="header-actions">
+                <div class="notifications" id="notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">3</span>
+                    
+                    <!-- Выпадающий список уведомлений -->
+                    <div class="notifications-dropdown" id="notificationsDropdown">
+                        <div class="notifications-header">
+                            <h3>Уведомления</h3>
+                            <button class="notifications-clear" id="clearNotifications">Очистить все</button>
+                        </div>
+                        <div class="notifications-list" id="notificationsList">
+                            <!-- Уведомления будут добавлены через JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Контент вкладок -->
+        <div class="tab-content">
+            <!-- Профиль работника -->
+            <div class="tab-panel" id="profile" style="display: none;">
+                <div class="profile-container">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="profileName">Имя Фамилия</h2>
+                            <p id="profilePosition">Должность</p>
+                            <div class="profile-completion" id="profileCompletion">
+                                <div class="completion-icon" id="completionIcon">!</div>
+                                <span class="completion-text" id="completionText">Профиль не заполнен</span>
+                            </div>
+                        </div>
+                        <div class="profile-achievements">
+                            <h4>Достижения</h4>
+                            <div class="achievements-grid" id="achievementsGrid">
+                                <!-- Достижения будут добавлены через JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-form">
+                        <h3>Анкета сотрудника</h3>
+                        <form id="profileForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="fullName">Полное имя</label>
+                                    <input type="text" id="fullName" name="fullName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="position">Должность</label>
+                                    <input type="text" id="position" name="position">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="department">Отдел</label>
+                                    <input type="text" id="department" name="department">
+                                </div>
+                                <div class="form-group">
+                                    <label for="experience">Опыт работы (лет)</label>
+                                    <input type="number" id="experience" name="experience">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="skills">Навыки (через запятую)</label>
+                                <textarea id="skills" name="skills" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="goals">Цели развития</label>
+                                <textarea id="goals" name="goals" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="save-btn">Сохранить профиль</button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Пути развития -->
+            <div class="tab-panel" id="development" style="display: none;">
+                <div class="development-container">
+                    <div class="ai-request-section">
+                        <h2>ИИ-консультант по развитию</h2>
+                        <p>Опишите ваши карьерные цели, и мы предложим план развития</p>
+                        
+                        <div class="request-form">
+                            <div class="form-group">
+                                <label for="aiRequest">Ваш запрос</label>
+                                <textarea id="aiRequest" placeholder="Например: хочу стать мидл Python разработчиком"></textarea>
+                            </div>
+                            <button class="ai-submit-btn" id="aiSubmitBtn">
+                                <i class="fas fa-magic"></i>
+                                Получить рекомендации
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="recommendations" id="recommendations" style="display: none;">
+                        <h3>Рекомендации по развитию</h3>
+                        <div class="recommendations-list" id="recommendationsList">
+                            <!-- Рекомендации будут добавлены через JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Сотрудники (для менеджера) -->
+            <div class="tab-panel" id="employees" style="display: none;">
+                <div class="employees-container">
+                    <div class="employees-header">
+                        <h2>Сотрудники</h2>
+                        <div class="search-filters">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="employeeSearch" placeholder="Поиск по имени">
+                            </div>
+                            <select id="positionFilter">
+                                <option value="">Все должности</option>
+                                <option value="developer">Разработчик</option>
+                                <option value="designer">Дизайнер</option>
+                                <option value="manager">Менеджер</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="employees-table-container">
+                        <table class="employees-table" id="employeesTable">
+                            <thead>
+                                <tr>
+                                    <th class="sortable" data-sort="name">
+                                        Имя
+                                        <div class="sort-indicator">
+                                            <div class="sort-arrow up"></div>
+                                            <div class="sort-arrow down"></div>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" data-sort="position">
+                                        Должность
+                                        <div class="sort-indicator">
+                                            <div class="sort-arrow up"></div>
+                                            <div class="sort-arrow down"></div>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" data-sort="department">
+                                        Отдел
+                                        <div class="sort-indicator">
+                                            <div class="sort-arrow up"></div>
+                                            <div class="sort-arrow down"></div>
+                                        </div>
+                                    </th>
+                                    <th class="sortable" data-sort="profileComplete">
+                                        Заполненность профиля
+                                        <div class="sort-indicator">
+                                            <div class="sort-arrow up"></div>
+                                            <div class="sort-arrow down"></div>
+                                        </div>
+                                    </th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employeesTableBody">
+                                <!-- Данные сотрудников будут добавлены через JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Таблица лидеров -->
+            <div class="tab-panel" id="leaderboard" style="display: none;">
+                <div class="leaderboard-container">
+                    <div class="leaderboard-header">
+                        <h2>Таблица лидеров</h2>
+                        <p>Рейтинг сотрудников по опыту и достижениям</p>
+                    </div>
+
+                    <div class="leaderboard-stats" id="leaderboardStats">
+                        <!-- Статистика будет добавлена через JavaScript -->
+                    </div>
+
+                    <div class="leaderboard-table-container">
+                        <table class="leaderboard-table" id="leaderboardTable">
+                            <thead>
+                                <tr>
+                                    <th>Место</th>
+                                    <th>Сотрудник</th>
+                                    <th>Уровень</th>
+                                    <th>Опыт</th>
+                                    <th>Достижения</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboardTableBody">
+                                <!-- Данные будут добавлены через JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ассистент (для менеджера) -->
+            <div class="tab-panel" id="assistant" style="display: none;">
+                <div class="assistant-container">
+                    <div class="assistant-header">
+                        <h2>ИИ-ассистент</h2>
+                        <p>Получите аналитику по сотрудникам</p>
+                    </div>
+
+                    <div class="assistant-form">
+                        <div class="form-group">
+                            <label for="assistantRequest">Ваш запрос</label>
+                            <textarea id="assistantRequest" placeholder="Например: покажи сотрудников с низкой заполненностью профиля"></textarea>
+                        </div>
+                        <button class="assistant-submit-btn" id="assistantSubmitBtn">
+                            <i class="fas fa-robot"></i>
+                            Получить анализ
+                        </button>
+                    </div>
+
+                    <div class="assistant-results" id="assistantResults" style="display: none;">
+                        <h3>Результаты анализа</h3>
+                        <div class="results-content" id="resultsContent">
+                            <!-- Результаты будут добавлены через JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Кнопка "Наверх" -->
+    <button class="back-to-top" id="backToTop" title="Наверх">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="/static/js/api-client.js"></script>
+    <script src="/static/js/gamification.js"></script>
+    <script src="/static/js/ai-assistant.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
