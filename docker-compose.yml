@@ -1,0 +1,44 @@
+services:
+  # База данных PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: hr_consultant_db
+    environment:
+      POSTGRES_DB: hr_consultant
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d hr_consultant"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Приложение HR Consultant
+  app:
+    build: .
+    container_name: hr_consultant_app
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./static:/app/static
+      - ./app/system_prompt.txt:/app/app/system_prompt.txt
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    command: sh -c "alembic upgrade head && gunicorn app.main:app --workers 3 --worker-class uvicorn.workers.UvicornWorker --bind=0.0.0.0:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+
+volumes:
+  postgres_data:
